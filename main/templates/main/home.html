@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<article class="media content-section">
+    <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt=""> -->
+    <div class="media-body">
+        <div class="article-metadata">
+            SNiPtool
+        </div>
+        <small>SNiPtool is a tool designed for the analysis of single-nucleotide polymorphism
+            prediction tools using computationally generated datasets.</small>
+    </div>
+</article>
+
+<article class="media content-section">
+    <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt=""> -->
+    <div class="media-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                {{ form|crispy }}
+            </div>
+            <div>
+                <button class="btn btn-outline-info" type="submit">Call VEP</button>
+            </div>
+            <div>
+                <br>VEP missense predictions:
+                <br>
+                <br><small>
+                    {% for result in results %}
+                    <li>{{ result }}</li>
+                    {% endfor %}
+                </small>
+            </div>
+        </form>
+    </div>
+</article>
+
+{% endblock content %}
