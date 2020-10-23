@@ -14,26 +14,69 @@
 </article>
 
 <article class="media content-section">
-    <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt=""> -->
     <div class="media-body">
         <form method="POST">
             {% csrf_token %}
+            Please select previously generated batch...
             <div>
-                {{ form|crispy }}
-            </div>
-            <div>
-                <button class="btn btn-outline-info" type="submit">Call VEP</button>
-            </div>
-            <div>
-                <br>VEP missense predictions:
-                <br>
-                <br><small>
-                    {% for result in results %}
-                    <li>{{ result }}</li>
-                    {% endfor %}
-                </small>
-            </div>
+                <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+                <button id="btn-batch-select-vep" class="btn btn-outline-info" type="button" name="button">Select
+                    existing
+                    batch</button>
+                <div>
+                    <br>... or generate a new one:
+                    {{ form|crispy }}
+                </div>
+                <div>
+                    <button class="btn btn-outline-info" name="generate"
+                        onclick="return confirm('A new mutation batch will be generated, proceed?')"
+                        type="submit">Generate missense mutations</button>
+                    <p style="color:green;"><small>{{gen_message}}</small></p>
+                    <br><strong>Selected batch: {{batch}}</strong>
+                </div>
         </form>
+
+        <br>Please select the prediction methods to consider (SIFT and PolyPhen-2 are included by default):
+        <div>
+            <br>
+            <textarea id="methods" name="methods" rows="4"
+                cols="73">LRT_score&#13;LRT_pred&#13;MutationTaster_score&#13;MutationTaster_pred&#13;MutationAssessor_score&#13;MutationAssessor_pred&#13;FATHMM_score&#13;FATHMM_pred&#13;MutPred_score&#13;CADD_raw&#13;MetaSVM_score&#13;MetaSVM_pred&#13;PROVEAN_score&#13;PROVEAN_pred&#13;VEST4_score</textarea>
+        </div>
+        <div>
+            <br>
+            <button class="btn btn-outline-info" name="vep"
+                onclick="return confirm('The selected batch will be submited to the VEP to get the predictions, proceed?')"
+                type="submit">Call VEP</button>
+            <a href="http://127.0.0.1:8000/" id="cancel" name="cancel" class="btn btn-outline-info">Cancel</a>
+            <p style="color:green;"><small>{{vep_message}}</small></p>
+        </div>
+        <div>
+            <br><strong>Export results</strong>
+            <div>Please select a finished mutation batch to get the results:</div>
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal2">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content"></div>
+                </div>
+            </div>
+            <button id="btn-batch-select-results" class="btn btn-outline-info" type="button" name="button">Select
+                finished batch</button>
+            <div><br>Export results from batch: {{batch}}</div>
+            <a href="#" id="view" name="view" class="btn btn-outline-info">View results</a>
+            <a href="#" id="export" name="export" class="btn btn-outline-info">Export to file</a>
+            <a href="http://127.0.0.1:8000/" id="cancel" name="cancel" class="btn btn-outline-info">Cancel</a>
+        </div>
+        <!-- <div>
+            <textarea rows="5" cols="92">{% for result in results %}{{result}}&#13;&#10;{% endfor %}</textarea>
+        </div> -->
+        <br>
+        <br>
+        <br>
+        <br>
+
     </div>
 </article>
 
