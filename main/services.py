@@ -104,7 +104,20 @@ def ensembl_get_predictions_gene(batch_id, methods_list, transcript_id):
                         mutation.vest4_score = consequence['vest4_score'] if 'vest4_score' in consequence else None
 
                         mutation.consequence_terms = ', '.join(terms)
+
                         mutation.modification_datetime = timezone.now()
+
+                        mutation.cadd_phred = consequence[
+                            'cadd_phred'] if 'cadd_phred' in consequence else None
+                        mutation.metalr_pred = consequence[
+                            'metalr_pred'] if 'metalr_pred' in consequence else None
+                        mutation.biotype = consequence[
+                            'biotype'] if 'biotype' in consequence else None
+                        mutation.impact = consequence[
+                            'impact'] if 'impact' in consequence else None
+                        mutation.cds_start = consequence[
+                            'cds_start'] if 'cds_start' in consequence else None
+
                         mutation.save()
 
             count += 200

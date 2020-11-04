@@ -47,6 +47,12 @@ class Mutation(models.Model):
     metasvm_pred = models.CharField(max_length=200, null=True)
     provean_pred = models.CharField(max_length=200, null=True)
 
+    cadd_phred = models.CharField(max_length=200, null=True)
+    metalr_pred = models.CharField(max_length=200, null=True)
+    biotype = models.CharField(max_length=200, null=True)
+    impact = models.CharField(max_length=200, null=True)
+    cds_start = models.CharField(max_length=200, null=True)
+
     consequence_terms = models.CharField(max_length=300, null=True)
     unified_score = models.DecimalField(
         max_digits=4, decimal_places=2, null=True)
